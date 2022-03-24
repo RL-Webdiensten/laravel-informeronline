@@ -72,5 +72,4 @@ it('does not authenticate when we get an empty body', function () {
     Config::set('informeronline.security_code', 'TEST');
 
     expect(\RLWebdiensten\LaravelInformerOnline\Facades\InformerOnline::getAdministrationDetails())->toBeArray()->toBeEmpty();
-
 });
