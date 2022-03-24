@@ -4,7 +4,7 @@ namespace RLWebdiensten\LaravelInformeronline\Abstracts;
 
 abstract class SalesSendMethod
 {
-    const MARK = "mark";
-    const EMAIL = "email";
-    const PEPPOL = "peppol";
+    public const MARK = "mark";
+    public const EMAIL = "email";
+    public const PEPPOL = "peppol";
 }

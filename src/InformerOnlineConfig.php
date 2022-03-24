@@ -2,11 +2,10 @@
 
 namespace RLWebdiensten\LaravelInformeronline;
 
-use \RLWebdiensten\LaravelInformeronline\Contracts\InformerOnlineConfig as Config;
+use RLWebdiensten\LaravelInformeronline\Contracts\InformerOnlineConfig as Config;
 
 class InformerOnlineConfig implements Config
 {
-
     public function __construct(protected ?string $baseUri = null, protected ?string $apiKey = null, protected ?int $securityCode = null)
     {
     }
