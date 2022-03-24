@@ -1,5 +1,5 @@
 {
-    "name": "rl-webdiensten/laravel-informeronline",
+    "name": "rlwebdiensten/laravel-informeronline",
     "description": "This is my package laravel-informeronline",
     "keywords": [
         "RL-Webdiensten",
@@ -13,7 +13,7 @@
             "name": "Fabian Dingemans",
             "email": "fabian@rl-webdiensten.nl",
             "role": "Developer"
-        },,
+        },
         {
             "name": "Rick Lambrechts",
             "email": "rick@rl-webdiensten.nl",

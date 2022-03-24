@@ -2,6 +2,7 @@
 
 namespace RLWebdiensten\LaravelInformeronline;
 
+use RLWebdiensten\LaravelInformeronline\Contracts\InformerOnlineConfig as Config;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -20,7 +21,7 @@ class InformerOnlineServiceProvider extends PackageServiceProvider
 
         $this->app->alias(InformerOnline::class, 'laravel-informeronline');
 
-        $this->app->singleton(InformerOnline::class, function () {
+        $this->app->singleton(Config::class, function () {
             return new InformerOnlineConfig(strval(config('informeronline.base_uri')), strval(config('informeronline.api_key')), intval(config('informeronline.security_code')));
         });
     }
