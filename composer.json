@@ -40,13 +40,13 @@
     },
     "autoload": {
         "psr-4": {
-            "RLWebdiensten\\LaravelInformeronline\\": "src",
-            "RLWebdiensten\\LaravelInformeronline\\Database\\Factories\\": "database/factories"
+            "RLWebdiensten\\LaravelInformerOnline\\": "src",
+
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "RLWebdiensten\\LaravelInformeronline\\Tests\\": "tests"
+            "RLWebdiensten\\LaravelInformerOnline\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -64,10 +64,10 @@
     "extra": {
         "laravel": {
             "providers": [
-              "InformeronlineServiceProvider"
+              "InformerOnlineServiceProvider"
             ],
             "aliases": {
-                "LaravelInformeronline": "Informeronline"
+                "LaravelInformerOnline": "InformerOnline"
             }
         }
     },
