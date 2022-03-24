@@ -66,9 +66,9 @@ class InformerOnline
         return $this->makeRequest("GET", "contact/$contactId");
     }
 
-    public function updateContact(int $contactId): array
+    public function updateContact(int $contactId, array $contactData): array
     {
-        return $this->makeRequest("PUT", "contact/$contactId");
+        return $this->makeRequest("PUT", "contact/$contactId", $contactData);
     }
 
     public function deleteContact(int $contactId): array
@@ -100,9 +100,9 @@ class InformerOnline
         return $this->makeRequest("GET", "invoices/sales/$invoiceId");
     }
 
-    public function updateSalesInvoice(int $invoiceId): array
+    public function updateSalesInvoice(int $invoiceId, array $salesInvoiceData): array
     {
-        return $this->makeRequest("PUT", "invoices/sales/$invoiceId");
+        return $this->makeRequest("PUT", "invoices/sales/$invoiceId", $salesInvoiceData);
     }
 
     public function sendSalesInvoice(int $invoiceId, SalesSendMethod $method, string $email): array
