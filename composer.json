@@ -10,13 +10,18 @@
     "license": "MIT",
     "authors": [
         {
+            "name": "Fabian Dingemans",
+            "email": "fabian@rl-webdiensten.nl",
+            "role": "Developer"
+        },,
+        {
             "name": "Rick Lambrechts",
             "email": "rick@rl-webdiensten.nl",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": "^8.1",
+        "php": "^8.0",
         "guzzlehttp/guzzle": "^7.4",
         "illuminate/contracts": "^9.0",
         "spatie/laravel-package-tools": "^1.9.2"
