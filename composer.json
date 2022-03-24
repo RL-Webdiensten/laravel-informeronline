@@ -66,7 +66,7 @@
               "RLWebdiensten\\LaravelInformerOnline\\InformerOnlineServiceProvider"
             ],
             "aliases": {
-                "RLWebdiensten\\LaravelInformerOnline\\LaravelInformerOnline": "InformerOnline"
+                "RLWebdiensten\\LaravelInformerOnline\\InformerOnline": "InformerOnline"
             }
         }
     },
