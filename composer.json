@@ -40,8 +40,7 @@
     },
     "autoload": {
         "psr-4": {
-            "RLWebdiensten\\LaravelInformerOnline\\": "src",
-
+            "RLWebdiensten\\LaravelInformerOnline\\": "src"
         }
     },
     "autoload-dev": {
