@@ -63,10 +63,10 @@
     "extra": {
         "laravel": {
             "providers": [
-              "InformerOnlineServiceProvider"
+              "RLWebdiensten\\LaravelInformerOnline\\InformerOnlineServiceProvider"
             ],
             "aliases": {
-                "LaravelInformerOnline": "InformerOnline"
+                "RLWebdiensten\\LaravelInformerOnline\\LaravelInformerOnline": "InformerOnline"
             }
         }
     },
