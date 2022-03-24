@@ -31,7 +31,7 @@ class InformerOnline
             'records' => $records,
             'page' => $page,
             'searcg' => $search,
-            'last_edit' => $last_edit
+            'last_edit' => $last_edit,
         ]);
     }
 
@@ -79,7 +79,7 @@ class InformerOnline
     // Invoice Sales - https://api.informer.eu/docs/#/Invoices_Sales
     public function getSalesInvoices(int $records = 100, int $page = 0, SalesInvoiceStatus $status = null): array
     {
-        if (!SalesInvoiceStatus::in_array($status)) {
+        if (! SalesInvoiceStatus::in_array($status)) {
             return [];
         }
 
@@ -117,7 +117,7 @@ class InformerOnline
     // Invoice Purchases - https://api.informer.eu/docs/#/Invoices_Purchases
     public function getPurchaseInvoices(int $records = 100, int $page = 0, PurchaseInvoiceStatus $status = null): array
     {
-        if (!PurchaseInvoiceStatus::in_array($status)) {
+        if (! PurchaseInvoiceStatus::in_array($status)) {
             return [];
         }
 
@@ -141,7 +141,7 @@ class InformerOnline
     // Receipts - https://api.informer.eu/docs/#/Receipts
     public function getReceipts(int $records = 100, int $page = 0, ReceiptsStatus $status = null): array
     {
-        if (!ReceiptsStatus::in_array($status)) {
+        if (! ReceiptsStatus::in_array($status)) {
             return [];
         }
 
@@ -226,10 +226,10 @@ class InformerOnline
             'debug' => false,
         ];
 
-        if (!is_null($body)) {
+        if (! is_null($body)) {
             $options['json'] = $body;
         }
-        if (!is_null($query)) {
+        if (! is_null($query)) {
             $options['query'] = $query;
         }
 
