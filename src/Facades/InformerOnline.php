@@ -1,11 +1,11 @@
 <?php
 
-namespace RLWebdiensten\LaravelInformeronline\Facades;
+namespace RLWebdiensten\LaravelInformerOnline\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \RLWebdiensten\LaravelInformeronline\InformerOnline
+ * @see \RLWebdiensten\LaravelInformerOnline\InformerOnline
  */
 class InformerOnline extends Facade
 {

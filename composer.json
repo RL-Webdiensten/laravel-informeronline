@@ -1,6 +1,6 @@
 {
     "name": "rlwebdiensten/laravel-informeronline",
-    "description": "This is my package laravel-informeronline",
+    "description": "A simple InformerOnline API client wrapper for Laravel.",
     "keywords": [
         "RL-Webdiensten",
         "laravel",

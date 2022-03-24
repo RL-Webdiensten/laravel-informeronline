@@ -3,10 +3,10 @@
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Config;
-use RLWebdiensten\LaravelInformeronline\InformerOnline;
+use RLWebdiensten\LaravelInformerOnline\InformerOnline;
 
 it('registers facade', function () {
-    expect(app()->make('RLWebdiensten\LaravelInformeronline\InformerOnline'))->toBeInstanceOf(InformerOnline::class);
+    expect(app()->make('RLWebdiensten\LaravelInformerOnline\InformerOnline'))->toBeInstanceOf(InformerOnline::class);
     expect(app(InformerOnline::class))->toBeInstanceOf(InformerOnline::class);
     expect(app('laravel-informeronline'))->toBeInstanceOf(InformerOnline::class);
 });
@@ -41,7 +41,7 @@ it('can authenticate', function () {
     Config::set('informeronline.api_key', 'TEST');
     Config::set('informeronline.security_code', 'TEST');
 
-    expect(\RLWebdiensten\LaravelInformeronline\Facades\InformerOnline::getAdministrationDetails())->toBeArray()->toHaveKey('administration');
+    expect(\RLWebdiensten\LaravelInformerOnline\Facades\InformerOnline::getAdministrationDetails())->toBeArray()->toHaveKey('administration');
 });
 
 it('does not authenticate when we get an 400 error', function () {
@@ -56,7 +56,7 @@ it('does not authenticate when we get an 400 error', function () {
     Config::set('informeronline.api_key', 'TEST');
     Config::set('informeronline.security_code', 'TEST');
 
-    expect(\RLWebdiensten\LaravelInformeronline\Facades\InformerOnline::getAdministrationDetails())->toBeArray()->toBeEmpty();
+    expect(\RLWebdiensten\LaravelInformerOnline\Facades\InformerOnline::getAdministrationDetails())->toBeArray()->toBeEmpty();
 });
 
 it('does not authenticate when we get an empty body', function () {
@@ -71,5 +71,6 @@ it('does not authenticate when we get an empty body', function () {
     Config::set('informeronline.api_key', 'TEST');
     Config::set('informeronline.security_code', 'TEST');
 
-    expect(\RLWebdiensten\LaravelInformeronline\Facades\InformerOnline::getAdministrationDetails())->toBeArray()->toBeEmpty();
+    expect(\RLWebdiensten\LaravelInformerOnline\Facades\InformerOnline::getAdministrationDetails())->toBeArray()->toBeEmpty();
+
 });

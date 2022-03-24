@@ -1,6 +1,6 @@
 <?php
 
-namespace RLWebdiensten\LaravelInformeronline\Abstracts;
+namespace RLWebdiensten\LaravelInformerOnline\Abstracts;
 
 abstract class SalesSendMethod
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace RLWebdiensten\LaravelInformeronline\Tests;
+namespace RLWebdiensten\LaravelInformerOnline\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use RLWebdiensten\LaravelInformeronline\InformerOnlineServiceProvider;
+use RLWebdiensten\LaravelInformerOnline\InformerOnlineServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -13,7 +13,7 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'RLWebdiensten\\InformerOnline\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'RLWebdiensten\\LaravelInformerOnline\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
     }
 

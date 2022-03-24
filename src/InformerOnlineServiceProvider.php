@@ -1,8 +1,8 @@
 <?php
 
-namespace RLWebdiensten\LaravelInformeronline;
+namespace RLWebdiensten\LaravelInformerOnline;
 
-use RLWebdiensten\LaravelInformeronline\Contracts\InformerOnlineConfig as Config;
+use RLWebdiensten\LaravelInformerOnline\Contracts\InformerOnlineConfig as Config;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 

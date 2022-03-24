@@ -1,13 +1,16 @@
 <?php
 
-namespace RLWebdiensten\LaravelInformeronline;
+namespace RLWebdiensten\LaravelInformerOnline;
 
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
-use RLWebdiensten\LaravelInformeronline\Abstracts\SalesSendMethod;
-use RLWebdiensten\LaravelInformeronline\Contracts\InformerOnlineConfig;
+use RLWebdiensten\LaravelInformerOnline\Abstracts\PurchaseInvoiceStatus;
+use RLWebdiensten\LaravelInformerOnline\Abstracts\ReceiptsStatus;
+use RLWebdiensten\LaravelInformerOnline\Abstracts\SalesInvoiceStatus;
+use RLWebdiensten\LaravelInformerOnline\Abstracts\SalesSendMethod;
+use RLWebdiensten\LaravelInformerOnline\Contracts\InformerOnlineConfig;
 
 class InformerOnline
 {
@@ -22,9 +25,14 @@ class InformerOnline
     }
 
     // Relations - https://api.informer.eu/docs/#/Relations
-    public function getRelations(): array
+    public function getRelations(int $records = 100, int $page = 0, string $search = null, string $last_edit = null): array
     {
-        return $this->makeRequest("GET", "relations");
+        return $this->makeRequest("GET", "relations", null, [
+            'records' => $records,
+            'page' => $page,
+            'searcg' => $search,
+            'last_edit' => $last_edit
+        ]);
     }
 
     public function getRelation(int $relationId): array
@@ -68,26 +76,18 @@ class InformerOnline
         return $this->makeRequest("DELETE", "contact/$contactId");
     }
 
-    // Receipts - https://api.informer.eu/docs/#/Receipts
-    public function getReceipts(): array
-    {
-        return $this->makeRequest("GET", "receipts");
-    }
-
-    public function createReceipts(array $receiptData): array
-    {
-        return $this->makeRequest("POST", "receipt", $receiptData);
-    }
-
-    public function getReceipt(int $receiptId): array
-    {
-        return $this->makeRequest("GET", "receipt/$receiptId");
-    }
-
     // Invoice Sales - https://api.informer.eu/docs/#/Invoices_Sales
-    public function getSalesInvoices(): array
+    public function getSalesInvoices(int $records = 100, int $page = 0, SalesInvoiceStatus $status = null): array
     {
-        return $this->makeRequest("GET", "invoices/sales");
+        if (!SalesInvoiceStatus::in_array($status)) {
+            return [];
+        }
+
+        return $this->makeRequest("GET", "invoices/sales", null, [
+            'records' => $records,
+            'page' => $page,
+            'filter' => $status,
+        ]);
     }
 
     public function createSalesInvoice(array $invoiceData): array
@@ -115,9 +115,17 @@ class InformerOnline
     }
 
     // Invoice Purchases - https://api.informer.eu/docs/#/Invoices_Purchases
-    public function getPurchaseInvoices(): array
+    public function getPurchaseInvoices(int $records = 100, int $page = 0, PurchaseInvoiceStatus $status = null): array
     {
-        return $this->makeRequest("GET", "invoices/purchase");
+        if (!PurchaseInvoiceStatus::in_array($status)) {
+            return [];
+        }
+
+        return $this->makeRequest("GET", "invoices/purchase", null, [
+            'records' => $records,
+            'page' => $page,
+            'filter' => $status,
+        ]);
     }
 
     public function getPurchaseInvoice(int $invoiceId): array
@@ -128,6 +136,30 @@ class InformerOnline
     public function createPurchaseInvoice(array $invoiceData): array
     {
         return $this->makeRequest("POST", "invoices/purchase", $invoiceData);
+    }
+
+    // Receipts - https://api.informer.eu/docs/#/Receipts
+    public function getReceipts(int $records = 100, int $page = 0, ReceiptsStatus $status = null): array
+    {
+        if (!ReceiptsStatus::in_array($status)) {
+            return [];
+        }
+
+        return $this->makeRequest("GET", "receipts", null, [
+            'records' => $records,
+            'page' => $page,
+            'filter' => $status,
+        ]);
+    }
+
+    public function createReceipts(array $receiptData): array
+    {
+        return $this->makeRequest("POST", "receipt", $receiptData);
+    }
+
+    public function getReceipt(int $receiptId): array
+    {
+        return $this->makeRequest("GET", "receipt/$receiptId");
     }
 
     // Ledgers - https://api.informer.eu/docs/#/Ledgers
@@ -142,16 +174,16 @@ class InformerOnline
         return $this->makeRequest("GET", "currencies");
     }
 
-    // Vat - https://api.informer.eu/docs/#/Vat
-    public function getVat(): array
-    {
-        return $this->makeRequest("GET", "vat");
-    }
-
     // Templates - https://api.informer.eu/docs/#/Templates
     public function getTemplates(): array
     {
         return $this->makeRequest("GET", "templates");
+    }
+
+    // Vat - https://api.informer.eu/docs/#/Vat
+    public function getVat(): array
+    {
+        return $this->makeRequest("GET", "vat");
     }
 
     // PaymentConditions - https://api.informer.eu/docs/#/Payment_conditions
@@ -162,10 +194,10 @@ class InformerOnline
 
     // ---------------------------------------------------------------------------- //
 
-    private function makeRequest(string $method, string $uri, ?array $body = null): array
+    private function makeRequest(string $method, string $uri, ?array $body = null, ?array $query = null): array
     {
         try {
-            $response = $this->client->request($method, $uri, array_merge($this->getClientOptions(), $this->getJsonBody($body)));
+            $response = $this->client->request($method, $uri, $this->getClientOptions($body, $query));
             if ($response->getStatusCode() !== 200) {
                 return [];
             }
@@ -181,7 +213,7 @@ class InformerOnline
         }
     }
 
-    private function getClientOptions(): array
+    private function getClientOptions(?array $body = null, ?array $query = null): array
     {
         $options = [
             'base_uri' => 'https://' . $this->config->getBaseUri() . '/v1/',
@@ -193,6 +225,13 @@ class InformerOnline
             'http_errors' => false,
             'debug' => false,
         ];
+
+        if (!is_null($body)) {
+            $options['json'] = $body;
+        }
+        if (!is_null($query)) {
+            $options['query'] = $query;
+        }
 
         return $options;
     }
@@ -207,14 +246,5 @@ class InformerOnline
         } catch (Exception) {
             return null;
         }
-    }
-
-    private function getJsonBody(?array $body = null): array
-    {
-        if (is_null($body)) {
-            return [];
-        }
-
-        return ['json' => $body];
     }
 }

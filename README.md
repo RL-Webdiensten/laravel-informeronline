@@ -15,19 +15,19 @@ You can install the package via composer:
 composer require rlwebdiensten/laravel-informeronline
 ```
 
-These are the available ENV variables:
+Please enter the following ENV variables:
 
 ```
-INFORMER_BASE_URI="" // Not required - default "api.informer.eu"
-INFORMER_API_KEY=""    // Required
-INFORMER_SECURITY_CODE=""    // Required
+INFORMER_API_KEY="somekey"
+INFORMER_SECURITY_CODE=0
 ```
 
 ## Usage
 
 Using dependency injection
+
 ```php
-function __construct(\RLWebdiensten\LaravelInformeronline\InformerOnline $informerOnlineService)
+function __construct(\RLWebdiensten\LaravelInformerOnline\InformerOnline $informerOnlineService)
 {
     $this->informerOnlineService = $informerOnlineService;
 

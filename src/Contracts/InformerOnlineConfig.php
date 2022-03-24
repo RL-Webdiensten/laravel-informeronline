@@ -1,6 +1,6 @@
 <?php
 
-namespace RLWebdiensten\LaravelInformeronline\Contracts;
+namespace RLWebdiensten\LaravelInformerOnline\Contracts;
 
 interface InformerOnlineConfig
 {

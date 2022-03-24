@@ -1,8 +1,8 @@
 <?php
 
-namespace RLWebdiensten\LaravelInformeronline;
+namespace RLWebdiensten\LaravelInformerOnline;
 
-use RLWebdiensten\LaravelInformeronline\Contracts\InformerOnlineConfig as Config;
+use RLWebdiensten\LaravelInformerOnline\Contracts\InformerOnlineConfig as Config;
 
 class InformerOnlineConfig implements Config
 {
