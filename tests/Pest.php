@@ -1,5 +1,5 @@
 <?php
 
-use RLWebdiensten\LaravelInformeronline\Tests\TestCase;
+use RLWebdiensten\LaravelInformerOnline\Tests\TestCase;
 
 uses(TestCase::class)->in(__DIR__);
