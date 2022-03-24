@@ -2,9 +2,9 @@
 
 namespace RLWebdiensten\LaravelInformeronline;
 
+use RLWebdiensten\LaravelInformeronline\Contracts\InformerOnlineConfig as Config;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use RLWebdiensten\LaravelInformeronline\Contracts\InformerOnlineConfig as Config;
 
 class InformerOnlineServiceProvider extends PackageServiceProvider
 {
