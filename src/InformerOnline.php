@@ -11,7 +11,6 @@ use RLWebdiensten\LaravelInformeronline\Contracts\InformerOnlineConfig;
 
 class InformerOnline
 {
-
     public function __construct(protected InformerOnlineConfig $config, protected Client $client)
     {
     }
@@ -111,7 +110,7 @@ class InformerOnline
         return $this->makeRequest("GET", "invoices/sales/send", [
             "invoice_id" => $invoiceId,
             "method" => $method,
-            "email_address" => $email
+            "email_address" => $email,
         ]);
     }
 

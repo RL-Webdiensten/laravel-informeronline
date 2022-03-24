@@ -2,8 +2,8 @@
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
-use RLWebdiensten\LaravelInformeronline\InformerOnline;
 use Illuminate\Support\Facades\Config;
+use RLWebdiensten\LaravelInformeronline\InformerOnline;
 
 it('registers facade', function () {
     expect(app()->make('RLWebdiensten\LaravelInformeronline\InformerOnline'))->toBeInstanceOf(InformerOnline::class);

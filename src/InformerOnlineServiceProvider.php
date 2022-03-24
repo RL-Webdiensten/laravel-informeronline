@@ -23,6 +23,5 @@ class InformerOnlineServiceProvider extends PackageServiceProvider
         $this->app->singleton(InformerOnline::class, function () {
             return new InformerOnlineConfig(strval(config('informeronline.base_uri')), strval(config('informeronline.api_key')), intval(config('informeronline.security_code')));
         });
-
     }
 }
