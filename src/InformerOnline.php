@@ -6,10 +6,10 @@ use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
-use RLWebdiensten\LaravelInformerOnline\Abstracts\PurchaseInvoiceStatus;
-use RLWebdiensten\LaravelInformerOnline\Abstracts\ReceiptsStatus;
-use RLWebdiensten\LaravelInformerOnline\Abstracts\SalesInvoiceStatus;
-use RLWebdiensten\LaravelInformerOnline\Abstracts\SalesSendMethod;
+use RLWebdiensten\LaravelInformerOnline\Enums\PurchaseInvoiceStatus;
+use RLWebdiensten\LaravelInformerOnline\Enums\ReceiptsStatus;
+use RLWebdiensten\LaravelInformerOnline\Enums\SalesInvoiceStatus;
+use RLWebdiensten\LaravelInformerOnline\Enums\SalesSendMethod;
 use RLWebdiensten\LaravelInformerOnline\Contracts\InformerOnlineConfig;
 
 class InformerOnline
@@ -30,7 +30,7 @@ class InformerOnline
         return $this->makeRequest("GET", "relations", null, [
             'records' => $records,
             'page' => $page,
-            'searcg' => $search,
+            'search' => $search,
             'last_edit' => $last_edit,
         ]);
     }
@@ -77,12 +77,8 @@ class InformerOnline
     }
 
     // Invoice Sales - https://api.informer.eu/docs/#/Invoices_Sales
-    public function getSalesInvoices(int $records = 100, int $page = 0, SalesInvoiceStatus $status = null): array
+    public function getSalesInvoices(int $records = 100, int $page = 0, ?SalesInvoiceStatus $status = null): array
     {
-        if (! SalesInvoiceStatus::in_array($status)) {
-            return [];
-        }
-
         return $this->makeRequest("GET", "invoices/sales", null, [
             'records' => $records,
             'page' => $page,
@@ -90,7 +86,7 @@ class InformerOnline
         ]);
     }
 
-    public function getSalesInvoicesGenerator(int $records = 100, SalesInvoiceStatus $status = null): \Generator
+    public function getSalesInvoicesGenerator(int $records = 100, ?SalesInvoiceStatus $status = null): \Generator
     {
         $page = 0;
 
@@ -128,12 +124,8 @@ class InformerOnline
     }
 
     // Invoice Purchases - https://api.informer.eu/docs/#/Invoices_Purchases
-    public function getPurchaseInvoices(int $records = 100, int $page = 0, PurchaseInvoiceStatus $status = null): array
+    public function getPurchaseInvoices(int $records = 100, int $page = 0, ?PurchaseInvoiceStatus $status = null): array
     {
-        if (! PurchaseInvoiceStatus::in_array($status)) {
-            return [];
-        }
-
         return $this->makeRequest("GET", "invoices/purchase", null, [
             'records' => $records,
             'page' => $page,
@@ -152,12 +144,8 @@ class InformerOnline
     }
 
     // Receipts - https://api.informer.eu/docs/#/Receipts
-    public function getReceipts(int $records = 100, int $page = 0, ReceiptsStatus $status = null): array
+    public function getReceipts(int $records = 100, int $page = 0, ?ReceiptsStatus $status = null): array
     {
-        if (! ReceiptsStatus::in_array($status)) {
-            return [];
-        }
-
         return $this->makeRequest("GET", "receipts", null, [
             'records' => $records,
             'page' => $page,
