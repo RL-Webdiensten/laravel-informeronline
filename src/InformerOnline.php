@@ -90,6 +90,19 @@ class InformerOnline
         ]);
     }
 
+    public function getSalesInvoicesGenerator(int $records = 100, SalesInvoiceStatus $status = null): \Generator
+    {
+        $page = 0;
+
+        do {
+            $result = $this->getSalesInvoices($records, $page++, $status);
+            foreach ($result as $key => $item) {
+                $item['sales_invoice_id'] = $key;
+                yield $key => $item;
+            }
+        } while (count($result) !== 0 && count($result) === $records);
+    }
+
     public function createSalesInvoice(array $invoiceData): array
     {
         return $this->makeRequest("POST", "invoices/sales", $invoiceData);
