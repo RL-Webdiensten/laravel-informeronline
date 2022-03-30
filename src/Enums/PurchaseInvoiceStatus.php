@@ -11,6 +11,6 @@ use Spatie\Enum\Enum;
  * @method static self paid()
  * @method static self approve()
  */
-class PurchaseInvoiceStatus Extends Enum
+class PurchaseInvoiceStatus extends Enum
 {
 }
