@@ -77,10 +77,14 @@ class InformerOnline
     }
 
     // Invoice Sales - https://api.informer.eu/docs/#/Invoices_Sales
+
+    /**
+     * @throws Exception
+     */
     public function getSalesInvoices(int $records = 100, int $page = 0, SalesInvoiceStatus $status = null): array
     {
         if (! SalesInvoiceStatus::in_array($status)) {
-            return [];
+            throw new Exception("Invalid status");
         }
 
         return $this->makeRequest("GET", "invoices/sales", null, [
@@ -115,10 +119,14 @@ class InformerOnline
     }
 
     // Invoice Purchases - https://api.informer.eu/docs/#/Invoices_Purchases
+
+    /**
+     * @throws Exception
+     */
     public function getPurchaseInvoices(int $records = 100, int $page = 0, PurchaseInvoiceStatus $status = null): array
     {
         if (! PurchaseInvoiceStatus::in_array($status)) {
-            return [];
+            throw new Exception("Invalid status");
         }
 
         return $this->makeRequest("GET", "invoices/purchase", null, [
@@ -139,10 +147,14 @@ class InformerOnline
     }
 
     // Receipts - https://api.informer.eu/docs/#/Receipts
+
+    /**
+     * @throws Exception
+     */
     public function getReceipts(int $records = 100, int $page = 0, ReceiptsStatus $status = null): array
     {
         if (! ReceiptsStatus::in_array($status)) {
-            return [];
+            throw new Exception("Invalid status");
         }
 
         return $this->makeRequest("GET", "receipts", null, [
@@ -199,17 +211,12 @@ class InformerOnline
         try {
             $response = $this->client->request($method, $uri, $this->getClientOptions($body, $query));
             if ($response->getStatusCode() !== 200) {
-                return [];
+                throw new Exception("Request failed with status code " . $response->getStatusCode());
             }
 
-            $result = $this->convertIncomingResponseToArray($response);
-            if (! $result) {
-                return [];
-            }
-
-            return $result;
-        } catch (GuzzleException) {
-            return [];
+            return $this->convertIncomingResponseToArray($response);
+        } catch (GuzzleException $e) {
+            throw new Exception("Request failed: ". $e->getMessage());
         }
     }
 
@@ -244,7 +251,7 @@ class InformerOnline
 
             return (array) json_decode($body, true, 10, JSON_THROW_ON_ERROR);
         } catch (Exception) {
-            return null;
+            throw new Exception("Response was not valid JSON");
         }
     }
 }
