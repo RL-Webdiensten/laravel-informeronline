@@ -101,22 +101,22 @@ class InformerOnline
 
     public function createSalesInvoice(array $invoiceData): array
     {
-        return $this->makeRequest("POST", "invoices/sales", $invoiceData);
+        return $this->makeRequest("POST", "invoice/sales", $invoiceData);
     }
 
     public function getSalesInvoice(int $invoiceId): array
     {
-        return $this->makeRequest("GET", "invoices/sales/$invoiceId");
+        return $this->makeRequest("GET", "invoice/sales/$invoiceId");
     }
 
     public function updateSalesInvoice(int $invoiceId, array $salesInvoiceData): array
     {
-        return $this->makeRequest("PUT", "invoices/sales/$invoiceId", $salesInvoiceData);
+        return $this->makeRequest("PUT", "invoice/sales/$invoiceId", $salesInvoiceData);
     }
 
     public function sendSalesInvoice(int $invoiceId, SalesSendMethod $method, string $email): array
     {
-        return $this->makeRequest("GET", "invoices/sales/send", [
+        return $this->makeRequest("GET", "invoice/sales/send", [
             "invoice_id" => $invoiceId,
             "method" => $method,
             "email_address" => $email,
@@ -135,12 +135,12 @@ class InformerOnline
 
     public function getPurchaseInvoice(int $invoiceId): array
     {
-        return $this->makeRequest("GET", "invoices/purchase/$invoiceId");
+        return $this->makeRequest("GET", "invoice/purchase/$invoiceId");
     }
 
     public function createPurchaseInvoice(array $invoiceData): array
     {
-        return $this->makeRequest("POST", "invoices/purchase", $invoiceData);
+        return $this->makeRequest("POST", "invoice/purchase", $invoiceData);
     }
 
     // Receipts - https://api.informer.eu/docs/#/Receipts
