@@ -4,6 +4,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Config;
 use RLWebdiensten\LaravelInformerOnline\InformerOnline;
+use RLWebdiensten\LaravelInformerOnline\Exceptions\InvalidResponseException;
 
 it('registers facade', function () {
     expect(app()->make('RLWebdiensten\LaravelInformerOnline\InformerOnline'))->toBeInstanceOf(InformerOnline::class);
@@ -56,8 +57,8 @@ it('does not authenticate when we get an 400 error', function () {
     Config::set('informeronline.api_key', 'TEST');
     Config::set('informeronline.security_code', 'TEST');
 
-    expect(\RLWebdiensten\LaravelInformerOnline\Facades\InformerOnline::getAdministrationDetails())->toBeArray()->toBeEmpty();
-});
+    \RLWebdiensten\LaravelInformerOnline\Facades\InformerOnline::getAdministrationDetails();
+})->throws(InvalidResponseException::class);
 
 it('does not authenticate when we get an empty body', function () {
     $guzzleMock = Mockery::mock(Client::class);
@@ -71,5 +72,5 @@ it('does not authenticate when we get an empty body', function () {
     Config::set('informeronline.api_key', 'TEST');
     Config::set('informeronline.security_code', 'TEST');
 
-    expect(\RLWebdiensten\LaravelInformerOnline\Facades\InformerOnline::getAdministrationDetails())->toBeArray()->toBeEmpty();
-});
+    \RLWebdiensten\LaravelInformerOnline\Facades\InformerOnline::getAdministrationDetails();
+})->throws(InvalidResponseException::class);
