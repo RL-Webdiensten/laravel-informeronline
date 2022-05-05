@@ -137,11 +137,17 @@ class InformerOnline
 
     public function getContact(int $contactId): array
     {
-        return $this->makeRequest(
+        $contacts = $this->makeRequest(
             method: "GET",
             uri: "contact/$contactId",
             field: "contact"
         );
+
+        if (! isset($contacts[$contactId])) {
+            throw new InvalidResponseException();
+        }
+
+        return $contacts[$contactId];
     }
 
     public function updateContact(int $contactId, array $contactData): int
@@ -276,11 +282,17 @@ class InformerOnline
 
     public function getPurchaseInvoice(int $invoiceId): array
     {
-        return $this->makeRequest(
+        $purchaseInvoices $this->makeRequest(
             method: "GET",
             uri: "invoice/purchase/$invoiceId",
             field: "purchase"
         );
+
+        if (! isset($purchaseInvoices[$invoiceId])) {
+            throw new InvalidResponseException();
+        }
+
+        return $purchaseInvoices[$invoiceId];
     }
 
     public function createPurchaseInvoice(array $invoiceData): int
@@ -324,11 +336,17 @@ class InformerOnline
 
     public function getReceipt(int $receiptId): array
     {
-        return $this->makeRequest(
+        $receipts = $this->makeRequest(
             method: "GET",
             uri: "receipt/$receiptId",
             field: "receipts"
         );
+
+        if (! isset($receipts[$receiptId])) {
+            throw new InvalidResponseException();
+        }
+
+        return $receipts[$receiptId];
     }
 
     // Ledgers - https://api.informer.eu/docs/#/Ledgers
