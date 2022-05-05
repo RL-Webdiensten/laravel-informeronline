@@ -6,10 +6,10 @@ use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
-use RLWebdiensten\LaravelInformerOnline\Abstracts\PurchaseInvoiceStatus;
-use RLWebdiensten\LaravelInformerOnline\Abstracts\ReceiptsStatus;
-use RLWebdiensten\LaravelInformerOnline\Abstracts\SalesInvoiceStatus;
-use RLWebdiensten\LaravelInformerOnline\Abstracts\SalesSendMethod;
+use RLWebdiensten\LaravelInformerOnline\Enums\PurchaseInvoiceStatus;
+use RLWebdiensten\LaravelInformerOnline\Enums\ReceiptsStatus;
+use RLWebdiensten\LaravelInformerOnline\Enums\SalesInvoiceStatus;
+use RLWebdiensten\LaravelInformerOnline\Enums\SalesSendMethod;
 use RLWebdiensten\LaravelInformerOnline\Contracts\InformerOnlineConfig;
 
 class InformerOnline
