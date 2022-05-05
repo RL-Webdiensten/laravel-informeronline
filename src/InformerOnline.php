@@ -395,7 +395,7 @@ class InformerOnline
         return $this->makeRequest(
             method: "GET",
             uri: "payment-conditions",
-            field: "paymentconditions"
+            field: "payment_conditions"
         );
     }
 
