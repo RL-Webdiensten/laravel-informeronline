@@ -45,6 +45,19 @@ class InformerOnline
         );
     }
 
+    public function getRelationsGenerator(int $records = 100, string $search = ''): Generator
+    {
+        $page = 0;
+
+        do {
+            $result = $this->informerOnline->getRelations($records, $page++, $search);
+            foreach ($result as $key => $item) {
+                $item['relation_id'] = $key;
+                yield $key => $item;
+            }
+        } while (count($result) !== 0 && count($result) === $records);
+    }
+
     public function getRelation(int $relationId): array
     {
         return $this->makeRequest(
