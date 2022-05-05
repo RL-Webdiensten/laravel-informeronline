@@ -12,8 +12,8 @@ use RLWebdiensten\LaravelInformerOnline\Enums\PurchaseInvoiceStatus;
 use RLWebdiensten\LaravelInformerOnline\Enums\ReceiptsStatus;
 use RLWebdiensten\LaravelInformerOnline\Enums\SalesInvoiceStatus;
 use RLWebdiensten\LaravelInformerOnline\Enums\SalesSendMethod;
-use RLWebdiensten\LaravelInformerOnline\Exceptions\InvalidResponseException;
 use RLWebdiensten\LaravelInformerOnline\Exceptions\ConnectionFailedException;
+use RLWebdiensten\LaravelInformerOnline\Exceptions\InvalidResponseException;
 
 class InformerOnline
 {
@@ -77,7 +77,7 @@ class InformerOnline
             body: $relationData
         );
 
-        if (!isset($response['id'])) {
+        if (! isset($response['id'])) {
             throw new InvalidResponseException();
         }
 
@@ -92,7 +92,7 @@ class InformerOnline
             body: $relationData
         );
 
-        if (!isset($response['id'])) {
+        if (! isset($response['id'])) {
             throw new InvalidResponseException();
         }
 
@@ -122,7 +122,7 @@ class InformerOnline
             body: $contactData
         );
 
-        if (!isset($response['id'])) {
+        if (! isset($response['id'])) {
             throw new InvalidResponseException();
         }
 
@@ -146,7 +146,7 @@ class InformerOnline
             body: $contactData
         );
 
-        if (!isset($response['id'])) {
+        if (! isset($response['id'])) {
             throw new InvalidResponseException();
         }
 
@@ -203,7 +203,7 @@ class InformerOnline
             body: $invoiceData
         );
 
-        if (!isset($response['invoice_id'])) {
+        if (! isset($response['invoice_id'])) {
             throw new InvalidResponseException();
         }
 
@@ -227,7 +227,7 @@ class InformerOnline
             body: $salesInvoiceData
         );
 
-        if (!isset($response['invoice_id'])) {
+        if (! isset($response['invoice_id'])) {
             throw new InvalidResponseException();
         }
 
@@ -285,7 +285,7 @@ class InformerOnline
             body: $invoiceData
         );
 
-        if (!isset($response['invoice_id'])) {
+        if (! isset($response['invoice_id'])) {
             throw new InvalidResponseException();
         }
 
