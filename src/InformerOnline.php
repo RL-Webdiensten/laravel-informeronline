@@ -3,6 +3,7 @@
 namespace RLWebdiensten\LaravelInformerOnline;
 
 use Exception;
+use Generator;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
