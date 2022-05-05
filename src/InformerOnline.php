@@ -62,11 +62,17 @@ class InformerOnline
 
     public function getRelation(int $relationId): array
     {
-        return $this->makeRequest(
+        $relations = $this->makeRequest(
             method: "GET",
             uri: "relation/$relationId",
             field: "relation"
         );
+
+        if (! isset($relations[$relationId])) {
+            throw new InvalidResponseException();
+        }
+
+        return $relations[$relationId];
     }
 
     public function createRelation(array $relationData): int
