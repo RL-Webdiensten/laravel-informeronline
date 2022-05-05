@@ -51,7 +51,7 @@ class InformerOnline
         $page = 0;
 
         do {
-            $result = $this->informerOnline->getRelations($records, $page++, $search);
+            $result = $this->getRelations($records, $page++, $search);
             foreach ($result as $key => $item) {
                 $item['relation_id'] = $key;
                 yield $key => $item;
