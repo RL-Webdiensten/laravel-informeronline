@@ -13,6 +13,7 @@ use RLWebdiensten\LaravelInformerOnline\Enums\ReceiptsStatus;
 use RLWebdiensten\LaravelInformerOnline\Enums\SalesInvoiceStatus;
 use RLWebdiensten\LaravelInformerOnline\Enums\SalesSendMethod;
 use RLWebdiensten\LaravelInformerOnline\Exceptions\InvalidResponseException;
+use RLWebdiensten\LaravelInformerOnline\Exceptions\ConnectionFailedException;
 
 class InformerOnline
 {
@@ -70,22 +71,32 @@ class InformerOnline
 
     public function createRelation(array $relationData): int
     {
-        return $this->makeRequest(
+        $response = $this->makeRequest(
             method: "POST",
             uri: "relation",
-            body: $relationData,
-            field: "id"
+            body: $relationData
         );
+
+        if (!isset($response['id'])) {
+            throw new InvalidResponseException();
+        }
+
+        return $response['id'];
     }
 
     public function updateRelation(int $relationId, array $relationData): int
     {
-        return $this->makeRequest(
+        $response = $this->makeRequest(
             method: "PUT",
             uri: "relation/$relationId",
-            body: $relationData,
-            field: "id"
+            body: $relationData
         );
+
+        if (!isset($response['id'])) {
+            throw new InvalidResponseException();
+        }
+
+        return $response['id'];
     }
 
     public function deleteRelation(int $relationId): bool
@@ -105,12 +116,17 @@ class InformerOnline
     // Contact - https://api.informer.eu/docs/#/Relations
     public function createContact(array $contactData): int
     {
-        return $this->makeRequest(
+        $response = $this->makeRequest(
             method: "POST",
             uri: "contact",
-            body: $contactData,
-            field: "id"
+            body: $contactData
         );
+
+        if (!isset($response['id'])) {
+            throw new InvalidResponseException();
+        }
+
+        return $response['id'];
     }
 
     public function getContact(int $contactId): array
@@ -124,12 +140,17 @@ class InformerOnline
 
     public function updateContact(int $contactId, array $contactData): int
     {
-        return $this->makeRequest(
+        $response = $this->makeRequest(
             method: "PUT",
             uri: "contact/$contactId",
-            body: $contactData,
-            field: "id"
+            body: $contactData
         );
+
+        if (!isset($response['id'])) {
+            throw new InvalidResponseException();
+        }
+
+        return $response['id'];
     }
 
     public function deleteContact(int $contactId): bool
@@ -176,12 +197,17 @@ class InformerOnline
 
     public function createSalesInvoice(array $invoiceData): int
     {
-        return $this->makeRequest(
+        $response = $this->makeRequest(
             method: "POST",
             uri: "invoice/sales",
-            body: $invoiceData,
-            field: "invoice_id"
+            body: $invoiceData
         );
+
+        if (!isset($response['invoice_id'])) {
+            throw new InvalidResponseException();
+        }
+
+        return $response['invoice_id'];
     }
 
     public function getSalesInvoice(int $invoiceId): array
@@ -195,12 +221,17 @@ class InformerOnline
 
     public function updateSalesInvoice(int $invoiceId, array $salesInvoiceData): int
     {
-        return $this->makeRequest(
+        $response = $this->makeRequest(
             method: "PUT",
             uri: "invoice/sales/$invoiceId",
-            body: $salesInvoiceData,
-            field: "invoice_id"
+            body: $salesInvoiceData
         );
+
+        if (!isset($response['invoice_id'])) {
+            throw new InvalidResponseException();
+        }
+
+        return $response['invoice_id'];
     }
 
     public function sendSalesInvoice(int $invoiceId, SalesSendMethod $method, string $email): bool
@@ -248,12 +279,17 @@ class InformerOnline
 
     public function createPurchaseInvoice(array $invoiceData): int
     {
-        return $this->makeRequest(
+        $response = $this->makeRequest(
             method: "POST",
             uri: "invoice/purchase",
-            body: $invoiceData,
-            field: "invoice_id"
+            body: $invoiceData
         );
+
+        if (!isset($response['invoice_id'])) {
+            throw new InvalidResponseException();
+        }
+
+        return $response['invoice_id'];
     }
 
     // Receipts - https://api.informer.eu/docs/#/Receipts
@@ -340,7 +376,7 @@ class InformerOnline
     }
 
     // ---------------------------------------------------------------------------- //
-    private function makeRequest(string $method, string $uri, ?array $body = null, ?array $query = null, ?string $field = null): array
+    private function makeRequest(string $method, string $uri, ?array $body = null, ?array $query = null): array
     {
         try {
             $response = $this->client->request($method, $uri, $this->getClientOptions($body, $query));
@@ -367,8 +403,8 @@ class InformerOnline
             }
 
             return $result[$field];
-        } catch (GuzzleException) {
-            return [];
+        } catch (GuzzleException $e) {
+            throw new ConnectionFailedException($e->getMessage());
         }
     }
 
