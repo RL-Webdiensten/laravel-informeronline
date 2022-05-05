@@ -415,7 +415,7 @@ class InformerOnline
             }
 
             if (isset($result['error'])) {
-                throw new InvalidResponseException($result['error']);
+                throw new InvalidResponseException(json_encode($result['error']));
             }
 
             if (! $field) {
