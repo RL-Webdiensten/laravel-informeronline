@@ -23,7 +23,7 @@ class InformerOnline
     public function getAdministrationDetails(): array
     {
         return $this->makeRequest(
-            method: "GET", 
+            method: "GET",
             uri: "administration",
             field: "administration"
         );
@@ -33,8 +33,8 @@ class InformerOnline
     public function getRelations(int $records = 100, int $page = 0, string $search = null, string $last_edit = null): array
     {
         return $this->makeRequest(
-            method: "GET", 
-            uri: "relations", 
+            method: "GET",
+            uri: "relations",
             query: [
                 'records' => $records,
                 'page' => $page,
@@ -48,7 +48,7 @@ class InformerOnline
     public function getRelation(int $relationId): array
     {
         return $this->makeRequest(
-            method: "GET", 
+            method: "GET",
             uri: "relation/$relationId",
             field: "relation"
         );
@@ -57,8 +57,8 @@ class InformerOnline
     public function createRelation(array $relationData): int
     {
         return $this->makeRequest(
-            method: "POST", 
-            uri: "relation", 
+            method: "POST",
+            uri: "relation",
             body: $relationData,
             field: "id"
         );
@@ -67,8 +67,8 @@ class InformerOnline
     public function updateRelation(int $relationId, array $relationData): int
     {
         return $this->makeRequest(
-            method: "PUT", 
-            uri: "relation/$relationId", 
+            method: "PUT",
+            uri: "relation/$relationId",
             body: $relationData,
             field: "id"
         );
@@ -77,7 +77,7 @@ class InformerOnline
     public function deleteRelation(int $relationId): bool
     {
         $response = $this->makeRequest(
-            method: "DELETE", 
+            method: "DELETE",
             uri: "relation/$relationId"
         );
 
@@ -92,8 +92,8 @@ class InformerOnline
     public function createContact(array $contactData): int
     {
         return $this->makeRequest(
-            method: "POST", 
-            uri: "contact", 
+            method: "POST",
+            uri: "contact",
             body: $contactData,
             field: "id"
         );
@@ -102,7 +102,7 @@ class InformerOnline
     public function getContact(int $contactId): array
     {
         return $this->makeRequest(
-            method: "GET", 
+            method: "GET",
             uri: "contact/$contactId",
             field: "contact"
         );
@@ -111,8 +111,8 @@ class InformerOnline
     public function updateContact(int $contactId, array $contactData): int
     {
         return $this->makeRequest(
-            method: "PUT", 
-            uri: "contact/$contactId", 
+            method: "PUT",
+            uri: "contact/$contactId",
             body: $contactData,
             field: "id"
         );
@@ -125,7 +125,7 @@ class InformerOnline
             uri: "contact/$contactId"
         );
 
-        if (!isset($response['sucess'])) {
+        if (! isset($response['sucess'])) {
             return false;
         }
 
@@ -163,8 +163,8 @@ class InformerOnline
     public function createSalesInvoice(array $invoiceData): int
     {
         return $this->makeRequest(
-            method: "POST", 
-            uri: "invoice/sales", 
+            method: "POST",
+            uri: "invoice/sales",
             body: $invoiceData,
             field: "invoice_id"
         );
@@ -173,7 +173,7 @@ class InformerOnline
     public function getSalesInvoice(int $invoiceId): array
     {
         return $this->makeRequest(
-            method: "GET", 
+            method: "GET",
             uri: "invoice/sales/$invoiceId",
             field: "sales"
         );
@@ -182,8 +182,8 @@ class InformerOnline
     public function updateSalesInvoice(int $invoiceId, array $salesInvoiceData): int
     {
         return $this->makeRequest(
-            method: "PUT", 
-            uri: "invoice/sales/$invoiceId", 
+            method: "PUT",
+            uri: "invoice/sales/$invoiceId",
             body: $salesInvoiceData,
             field: "invoice_id"
         );
@@ -192,8 +192,8 @@ class InformerOnline
     public function sendSalesInvoice(int $invoiceId, SalesSendMethod $method, string $email): bool
     {
         $response = $this->makeRequest(
-            method: "GET", 
-            uri: "invoice/sales/send", 
+            method: "GET",
+            uri: "invoice/sales/send",
             body: [
                 "invoice_id" => $invoiceId,
                 "method" => $method,
@@ -201,7 +201,7 @@ class InformerOnline
             ],
         );
 
-        if (!isset($response['message'])) {
+        if (! isset($response['message'])) {
             return false;
         }
 
@@ -247,7 +247,7 @@ class InformerOnline
     {
         return $this->makeRequest(
             method: "GET",
-            uri: "receipts", 
+            uri: "receipts",
             query: [
                 'records' => $records,
                 'page' => $page,
@@ -336,7 +336,7 @@ class InformerOnline
             }
 
             $result = $this->convertIncomingResponseToArray($response);
-            if (! $result || !is_array($result)) {
+            if (! $result || ! is_array($result)) {
                 throw new InvalidResponseException();
             }
 
@@ -348,7 +348,7 @@ class InformerOnline
                 return $result;
             }
 
-            if (!isset($result[$field])) {
+            if (! isset($result[$field])) {
                 throw new InvalidResponseException();
             }
 
