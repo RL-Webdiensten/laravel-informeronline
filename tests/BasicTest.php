@@ -42,7 +42,7 @@ it('can authenticate', function () {
     Config::set('informeronline.api_key', 'TEST');
     Config::set('informeronline.security_code', 'TEST');
 
-    expect(\RLWebdiensten\LaravelInformerOnline\Facades\InformerOnline::getAdministrationDetails())->toBeArray()->toHaveKey('administration');
+    expect(\RLWebdiensten\LaravelInformerOnline\Facades\InformerOnline::getAdministrationDetails())->toBeArray()->toHaveKey('company_name');
 });
 
 it('does not authenticate when we get an 400 error', function () {
