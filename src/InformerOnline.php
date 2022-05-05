@@ -282,7 +282,7 @@ class InformerOnline
 
     public function getPurchaseInvoice(int $invoiceId): array
     {
-        $purchaseInvoices $this->makeRequest(
+        $purchaseInvoices = $this->makeRequest(
             method: "GET",
             uri: "invoice/purchase/$invoiceId",
             field: "purchase"
