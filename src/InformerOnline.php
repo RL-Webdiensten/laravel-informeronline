@@ -376,7 +376,7 @@ class InformerOnline
     }
 
     // ---------------------------------------------------------------------------- //
-    private function makeRequest(string $method, string $uri, ?array $body = null, ?array $query = null): array
+    private function makeRequest(string $method, string $uri, ?array $body = null, ?array $query = null, ?string $field = null): array
     {
         try {
             $response = $this->client->request($method, $uri, $this->getClientOptions($body, $query));
