@@ -3,8 +3,8 @@
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Config;
-use RLWebdiensten\LaravelInformerOnline\InformerOnline;
 use RLWebdiensten\LaravelInformerOnline\Exceptions\InvalidResponseException;
+use RLWebdiensten\LaravelInformerOnline\InformerOnline;
 
 it('registers facade', function () {
     expect(app()->make('RLWebdiensten\LaravelInformerOnline\InformerOnline'))->toBeInstanceOf(InformerOnline::class);
