@@ -11,6 +11,7 @@ use RLWebdiensten\LaravelInformerOnline\Enums\PurchaseInvoiceStatus;
 use RLWebdiensten\LaravelInformerOnline\Enums\ReceiptsStatus;
 use RLWebdiensten\LaravelInformerOnline\Enums\SalesInvoiceStatus;
 use RLWebdiensten\LaravelInformerOnline\Enums\SalesSendMethod;
+use RLWebdiensten\LaravelInformerOnline\Exceptions\InvalidResponseException;
 
 class InformerOnline
 {
@@ -21,69 +22,129 @@ class InformerOnline
     // Administration - https://api.informer.eu/docs/#/Administration
     public function getAdministrationDetails(): array
     {
-        return $this->makeRequest("GET", "administration");
+        return $this->makeRequest(
+            method: "GET", 
+            uri: "administration",
+            field: "administration"
+        );
     }
 
     // Relations - https://api.informer.eu/docs/#/Relations
     public function getRelations(int $records = 100, int $page = 0, string $search = null, string $last_edit = null): array
     {
-        return $this->makeRequest("GET", "relations", null, [
-            'records' => $records,
-            'page' => $page,
-            'search' => $search,
-            'last_edit' => $last_edit,
-        ]);
+        return $this->makeRequest(
+            method: "GET", 
+            uri: "relations", 
+            query: [
+                'records' => $records,
+                'page' => $page,
+                'search' => $search,
+                'last_edit' => $last_edit,
+            ],
+            field: "relation"
+        );
     }
 
     public function getRelation(int $relationId): array
     {
-        return $this->makeRequest("GET", "relation/$relationId");
+        return $this->makeRequest(
+            method: "GET", 
+            uri: "relation/$relationId",
+            field: "relation"
+        );
     }
 
-    public function createRelation(array $relationData): array
+    public function createRelation(array $relationData): int
     {
-        return $this->makeRequest("POST", "relation", $relationData);
+        return $this->makeRequest(
+            method: "POST", 
+            uri: "relation", 
+            body: $relationData,
+            field: "id"
+        );
     }
 
-    public function updateRelation(int $relationId, array $relationData): array
+    public function updateRelation(int $relationId, array $relationData): int
     {
-        return $this->makeRequest("PUT", "relation/$relationId", $relationData);
+        return $this->makeRequest(
+            method: "PUT", 
+            uri: "relation/$relationId", 
+            body: $relationData,
+            field: "id"
+        );
     }
 
-    public function deleteRelation(int $relationId): array
+    public function deleteRelation(int $relationId): bool
     {
-        return $this->makeRequest("DELETE", "relation/$relationId");
+        $response = $this->makeRequest(
+            method: "DELETE", 
+            uri: "relation/$relationId"
+        );
+
+        if (isset($response['sucess'])) {
+            return true;
+        }
+
+        return false;
     }
 
     // Contact - https://api.informer.eu/docs/#/Relations
-    public function createContact(array $contactData): array
+    public function createContact(array $contactData): int
     {
-        return $this->makeRequest("POST", "contact", $contactData);
+        return $this->makeRequest(
+            method: "POST", 
+            uri: "contact", 
+            body: $contactData,
+            field: "id"
+        );
     }
 
     public function getContact(int $contactId): array
     {
-        return $this->makeRequest("GET", "contact/$contactId");
+        return $this->makeRequest(
+            method: "GET", 
+            uri: "contact/$contactId",
+            field: "contact"
+        );
     }
 
-    public function updateContact(int $contactId, array $contactData): array
+    public function updateContact(int $contactId, array $contactData): int
     {
-        return $this->makeRequest("PUT", "contact/$contactId", $contactData);
+        return $this->makeRequest(
+            method: "PUT", 
+            uri: "contact/$contactId", 
+            body: $contactData,
+            field: "id"
+        );
     }
 
-    public function deleteContact(int $contactId): array
+    public function deleteContact(int $contactId): bool
     {
-        return $this->makeRequest("DELETE", "contact/$contactId");
+        $response = $this->makeRequest(
+            method: "DELETE",
+            uri: "contact/$contactId"
+        );
+
+        if (!isset($response['sucess'])) {
+            return false;
+        }
+
+        return true;
     }
 
     // Invoice Sales - https://api.informer.eu/docs/#/Invoices_Sales
     public function getSalesInvoices(int $records = 100, int $page = 0, ?SalesInvoiceStatus $status = null): array
     {
-        return $this->makeRequest("GET", "invoices/sales", null, [
-            'records' => $records,
-            'page' => $page,
-            'filter' => $status,
-        ]);
+        return $this->makeRequest(
+            method: "GET",
+            uri: "invoices/sales",
+            query: [
+                'records' => $records,
+                'page' => $page,
+                'filter' => $status,
+            ],
+            field: "sales"
+        );
     }
 
     public function getSalesInvoicesGenerator(int $records = 100, ?SalesInvoiceStatus $status = null): \Generator
@@ -99,116 +160,199 @@ class InformerOnline
         } while (count($result) !== 0 && count($result) === $records);
     }
 
-    public function createSalesInvoice(array $invoiceData): array
+    public function createSalesInvoice(array $invoiceData): int
     {
-        return $this->makeRequest("POST", "invoice/sales", $invoiceData);
+        return $this->makeRequest(
+            method: "POST", 
+            uri: "invoice/sales", 
+            body: $invoiceData,
+            field: "invoice_id"
+        );
     }
 
     public function getSalesInvoice(int $invoiceId): array
     {
-        return $this->makeRequest("GET", "invoice/sales/$invoiceId");
+        return $this->makeRequest(
+            method: "GET", 
+            uri: "invoice/sales/$invoiceId",
+            field: "sales"
+        );
     }
 
-    public function updateSalesInvoice(int $invoiceId, array $salesInvoiceData): array
+    public function updateSalesInvoice(int $invoiceId, array $salesInvoiceData): int
     {
-        return $this->makeRequest("PUT", "invoice/sales/$invoiceId", $salesInvoiceData);
+        return $this->makeRequest(
+            method: "PUT", 
+            uri: "invoice/sales/$invoiceId", 
+            body: $salesInvoiceData,
+            field: "invoice_id"
+        );
     }
 
-    public function sendSalesInvoice(int $invoiceId, SalesSendMethod $method, string $email): array
+    public function sendSalesInvoice(int $invoiceId, SalesSendMethod $method, string $email): bool
     {
-        return $this->makeRequest("GET", "invoice/sales/send", [
-            "invoice_id" => $invoiceId,
-            "method" => $method,
-            "email_address" => $email,
-        ]);
+        $response = $this->makeRequest(
+            method: "GET", 
+            uri: "invoice/sales/send", 
+            body: [
+                "invoice_id" => $invoiceId,
+                "method" => $method,
+                "email_address" => $email,
+            ],
+        );
+
+        if (!isset($response['message'])) {
+            return false;
+        }
+
+        return true;
     }
 
     // Invoice Purchases - https://api.informer.eu/docs/#/Invoices_Purchases
     public function getPurchaseInvoices(int $records = 100, int $page = 0, ?PurchaseInvoiceStatus $status = null): array
     {
-        return $this->makeRequest("GET", "invoices/purchase", null, [
-            'records' => $records,
-            'page' => $page,
-            'filter' => $status,
-        ]);
+        return $this->makeRequest(
+            method: "GET",
+            uri: "invoices/purchase",
+            query: [
+                'records' => $records,
+                'page' => $page,
+                'filter' => $status,
+            ],
+            field: "purchase"
+        );
     }
 
     public function getPurchaseInvoice(int $invoiceId): array
     {
-        return $this->makeRequest("GET", "invoice/purchase/$invoiceId");
+        return $this->makeRequest(
+            method: "GET",
+            uri: "invoice/purchase/$invoiceId",
+            field: "purchase"
+        );
     }
 
-    public function createPurchaseInvoice(array $invoiceData): array
+    public function createPurchaseInvoice(array $invoiceData): int
     {
-        return $this->makeRequest("POST", "invoice/purchase", $invoiceData);
+        return $this->makeRequest(
+            method: "POST",
+            uri: "invoice/purchase",
+            body: $invoiceData,
+            field: "invoice_id"
+        );
     }
 
     // Receipts - https://api.informer.eu/docs/#/Receipts
     public function getReceipts(int $records = 100, int $page = 0, ?ReceiptsStatus $status = null): array
     {
-        return $this->makeRequest("GET", "receipts", null, [
-            'records' => $records,
-            'page' => $page,
-            'filter' => $status,
-        ]);
+        return $this->makeRequest(
+            method: "GET",
+            uri: "receipts", 
+            query: [
+                'records' => $records,
+                'page' => $page,
+                'filter' => $status,
+            ],
+            field: "receipts"
+        );
     }
 
     public function createReceipts(array $receiptData): array
     {
-        return $this->makeRequest("POST", "receipt", $receiptData);
+        return $this->makeRequest(
+            method: "POST",
+            uri: "receipt",
+            body: $receiptData
+        );
     }
 
     public function getReceipt(int $receiptId): array
     {
-        return $this->makeRequest("GET", "receipt/$receiptId");
+        return $this->makeRequest(
+            method: "GET",
+            uri: "receipt/$receiptId",
+            field: "receipts"
+        );
     }
 
     // Ledgers - https://api.informer.eu/docs/#/Ledgers
     public function getLedgers(): array
     {
-        return $this->makeRequest("GET", "ledgers");
+        return $this->makeRequest(
+            method: "GET",
+            uri: "ledgers",
+            field: "ledgers"
+        );
     }
 
     // Currencies - https://api.informer.eu/docs/#/Currencies
     public function getCurrencies(): array
     {
-        return $this->makeRequest("GET", "currencies");
+        return $this->makeRequest(
+            method: "GET",
+            uri: "currencies",
+            field: "currencies"
+        );
     }
 
     // Templates - https://api.informer.eu/docs/#/Templates
     public function getTemplates(): array
     {
-        return $this->makeRequest("GET", "templates");
+        return $this->makeRequest(
+            method: "GET",
+            uri: "templates",
+            field: "templates"
+        );
     }
 
     // Vat - https://api.informer.eu/docs/#/Vat
     public function getVat(): array
     {
-        return $this->makeRequest("GET", "vat");
+        return $this->makeRequest(
+            method: "GET",
+            uri: "vat",
+            field: "vat"
+        );
     }
 
     // PaymentConditions - https://api.informer.eu/docs/#/Payment_conditions
     public function getPaymentConditions(): array
     {
-        return $this->makeRequest("GET", "payment-conditions");
+        return $this->makeRequest(
+            method: "GET",
+            uri: "payment-conditions",
+            field: "paymentconditions"
+        );
     }
 
     // ---------------------------------------------------------------------------- //
-
-    private function makeRequest(string $method, string $uri, ?array $body = null, ?array $query = null): array
+    private function makeRequest(string $method, string $uri, ?array $body = null, ?array $query = null, ?string $field = null): array
     {
         try {
             $response = $this->client->request($method, $uri, $this->getClientOptions($body, $query));
             if ($response->getStatusCode() !== 200) {
-                return [];
+                // TODO: throw errors for error codes
+                throw new InvalidResponseException();
             }
 
             $result = $this->convertIncomingResponseToArray($response);
-            if (! $result) {
-                return [];
+            if (! $result || !is_array($result)) {
+                throw new InvalidResponseException();
             }
 
-            return $result;
+            if (isset($result['error'])) {
+                throw new InvalidResponseException($result['error']);
+            }
+
+            if (! $field) {
+                return $result;
+            }
+
+            if (!isset($result[$field])) {
+                throw new InvalidResponseException();
+            }
+
+            return $result[$field];
         } catch (GuzzleException) {
             return [];
         }
@@ -245,7 +389,7 @@ class InformerOnline
 
             return (array) json_decode($body, true, 10, JSON_THROW_ON_ERROR);
         } catch (Exception) {
-            return null;
+            throw new InvalidResponseException();
         }
     }
 }
