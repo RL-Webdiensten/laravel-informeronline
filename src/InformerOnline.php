@@ -431,7 +431,7 @@ class InformerOnline
         return $options;
     }
 
-    private function convertIncomingResponseToArray(ResponseInterface $response): ?array
+    private function convertIncomingResponseToArray(ResponseInterface $response): array
     {
         try {
             $response->getBody()->rewind();
