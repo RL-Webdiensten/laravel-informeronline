@@ -189,7 +189,7 @@ class InformerOnline
                 query: [
                     'records' => $records,
                     'page' => $page,
-                    'filter' => $status,
+                    'filter' => $status->value,
                 ],
                 field: "sales"
             );
@@ -258,7 +258,7 @@ class InformerOnline
             uri: "invoice/sales/send",
             body: [
                 "invoice_id" => $invoiceId,
-                "method" => $method,
+                "method" => $method->value,
                 "email_address" => $email,
             ],
         );
@@ -280,7 +280,7 @@ class InformerOnline
                 query: [
                     'records' => $records,
                     'page' => $page,
-                    'filter' => $status,
+                    'filter' => $status->value,
                 ],
                 field: "purchase"
             );
@@ -329,7 +329,7 @@ class InformerOnline
             query: [
                 'records' => $records,
                 'page' => $page,
-                'filter' => $status,
+                'filter' => $status->value,
             ],
             field: "receipts"
         );
