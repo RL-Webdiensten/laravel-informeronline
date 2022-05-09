@@ -183,16 +183,21 @@ class InformerOnline
     // Invoice Sales - https://api.informer.eu/docs/#/Invoices_Sales
     public function getSalesInvoices(int $records = 100, int $page = 0, ?SalesInvoiceStatus $status = null): array
     {
-        return $this->makeRequest(
-            method: "GET",
-            uri: "invoices/sales",
-            query: [
-                'records' => $records,
-                'page' => $page,
-                'filter' => $status,
-            ],
-            field: "sales"
-        );
+        try {
+            return $this->makeRequest(
+                method: "GET",
+                uri: "invoices/sales",
+                query: [
+                    'records' => $records,
+                    'page' => $page,
+                    'filter' => $status->value,
+                ],
+                field: "sales"
+            );
+        } catch (InvalidResponseException) {
+            // InformerOnline returns ['error' => 'No sales invoice found'] instead of an empty array
+            return [];
+        }
     }
 
     public function getSalesInvoicesGenerator(int $records = 100, ?SalesInvoiceStatus $status = null): \Generator
@@ -254,7 +259,7 @@ class InformerOnline
             uri: "invoice/sales/send",
             body: [
                 "invoice_id" => $invoiceId,
-                "method" => $method,
+                "method" => $method->value,
                 "email_address" => $email,
             ],
         );
@@ -269,16 +274,21 @@ class InformerOnline
     // Invoice Purchases - https://api.informer.eu/docs/#/Invoices_Purchases
     public function getPurchaseInvoices(int $records = 100, int $page = 0, ?PurchaseInvoiceStatus $status = null): array
     {
-        return $this->makeRequest(
-            method: "GET",
-            uri: "invoices/purchase",
-            query: [
-                'records' => $records,
-                'page' => $page,
-                'filter' => $status,
-            ],
-            field: "purchase"
-        );
+        try {
+            return $this->makeRequest(
+                method: "GET",
+                uri: "invoices/purchase",
+                query: [
+                    'records' => $records,
+                    'page' => $page,
+                    'filter' => $status->value,
+                ],
+                field: "purchase"
+            );
+        } catch (InvalidResponseException) {
+            // InformerOnline returns ['error' => 'No purchase invoice found'] instead of an empty array
+            return [];
+        }
     }
 
     public function getPurchaseInvoice(int $invoiceId): array
@@ -320,7 +330,7 @@ class InformerOnline
             query: [
                 'records' => $records,
                 'page' => $page,
-                'filter' => $status,
+                'filter' => $status->value,
             ],
             field: "receipts"
         );
