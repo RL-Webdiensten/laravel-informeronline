@@ -15,7 +15,6 @@ use RLWebdiensten\LaravelInformerOnline\Enums\SalesSendMethod;
 use RLWebdiensten\LaravelInformerOnline\Exceptions\ConnectionFailedException;
 use RLWebdiensten\LaravelInformerOnline\Exceptions\InvalidResponseException;
 
-
 class InformerOnline
 {
     public function __construct(protected InformerOnlineConfig $config, protected Client $client)
